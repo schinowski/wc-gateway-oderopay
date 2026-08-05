@@ -117,22 +117,6 @@ class WC_Gateway_OderoPay extends WC_Payment_Gateway
 		add_action( 'woocommerce_receipt_oderopay', array( $this, 'receipt_page' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 
-
-		#add route for check odero payment
-		add_action( 'rest_api_init', function() {
-			register_rest_route(
-				'wc',
-				'/odero/(?P<id>[a-zA-Z0-9-]+)/verify/',
-				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [$this, 'verify_odero_payment'],
-					'permission_callback' => function(){
-						return true;
-					}
-				]
-			);
-		});
-
 		$merchantId     = !$this->sandbox ? $this->merchant_id : $this->merchant_id_sandbox;
 		$merchantToken  = !$this->sandbox ? $this->merchant_token : $this->merchant_token_sandbox;
 
